@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kandidatintag – TandemTalent</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body data-page="screening">
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo" aria-label="TandemTalent startsida">
+                    <span>TT</span>
+                    TandemTalent
+                </a>
+                <ul>
+                    <li><a href="losning.html">Lösningen</a></li>
+                    <li><a href="process.html">Så funkar det</a></li>
+                    <li><a href="screening.html" class="is-active">Kandidatintag</a></li>
+                    <li><a href="case.html">Kundcase</a></li>
+                    <li><a href="kontakt.html">Boka demo</a></li>
+                </ul>
+                <a href="kontakt.html" class="button">Boka demo</a>
+            </nav>
+            <div class="page-hero">
+                <h1>Bygg rekryteringar och låt kandidater kvalificera sig själva</h1>
+                <p>
+                    Skapa uppdrag, ställ in screeningfrågor och låt TandemTalent gallra kandidater automatiskt. Rekryterare får ett swipe-flöde med redan matchade profiler.
+                </p>
+                <div class="hero-actions">
+                    <a href="#workspace" class="button">Starta screening</a>
+                    <a href="kontakt.html" class="button button-secondary">Boka demo</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="workspace" class="screening-workspace">
+            <div class="container">
+                <div class="workspace-grid">
+                    <div class="workspace-lane">
+                        <article class="card recruitment-card">
+                            <header class="card-header">
+                                <h2>Skapa ny rekrytering</h2>
+                                <p class="muted">Definiera roll, krav och screeningfrågor. Rekryteringen sparas lokalt.</p>
+                            </header>
+                            <form id="recruitmentForm" class="intake-form" novalidate>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="recruitmentName">Intern benämning</label>
+                                        <input type="text" id="recruitmentName" name="name" placeholder="Ex. Lagerteam Q1" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recruitmentRole">Roll / titel</label>
+                                        <input type="text" id="recruitmentRole" name="role" placeholder="Ex. Lagermedarbetare" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recruitmentLocation">Ort</label>
+                                        <input type="text" id="recruitmentLocation" name="location" placeholder="Göteborg" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="recruitmentThreshold">Antal ja-svar som krävs</label>
+                                        <input type="number" id="recruitmentThreshold" name="threshold" min="1" value="4" />
+                                        <small class="input-help">Justera efter hur många frågor du lägger till.</small>
+                                    </div>
+                                </div>
+                                <div class="question-builder">
+                                    <div class="question-builder-header">
+                                        <h3>Screeningfrågor</h3>
+                                        <button type="button" id="addQuestionButton" class="text-button">+ Lägg till fråga</button>
+                                    </div>
+                                    <p class="muted">Max 6 frågor. Minst 3 behövs för att skapa en rekrytering.</p>
+                                    <div id="questionList" class="question-list"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="recruitmentRequirements">Måstekrav</label>
+                                    <textarea id="recruitmentRequirements" name="requirements" rows="4" placeholder="Skriv ett krav per rad"></textarea>
+                                </div>
+                                <div class="intake-actions">
+                                    <button type="submit" class="button">Skapa rekrytering</button>
+                                    <p class="form-feedback" id="recruitmentFeedback" role="status" aria-live="polite"></p>
+                                </div>
+                            </form>
+                        </article>
+
+                        <article class="card recruitment-card">
+                            <header class="card-header">
+                                <h2>Aktiva rekryteringar</h2>
+                                <p class="muted">Välj en rekrytering för att registrera kandidater och se matchade profiler.</p>
+                            </header>
+                            <div id="recruitmentList" class="recruitment-list" aria-live="polite"></div>
+                        </article>
+                    </div>
+
+                    <div class="workspace-lane workspace-lane--focus">
+                        <article class="card active-recruitment">
+                            <header class="card-header">
+                                <h2 id="activeRecruitmentTitle">Ingen rekrytering vald</h2>
+                                <p id="activeRecruitmentMeta" class="muted">Skapa eller välj en rekrytering för att se detaljer.</p>
+                            </header>
+                            <div class="active-recruitment-body" id="activeRecruitmentBody">
+                                <div class="active-summary">
+                                    <div>
+                                        <h3>Roll &amp; plats</h3>
+                                        <p id="activeRecruitmentRole" class="muted">–</p>
+                                    </div>
+                                    <div>
+                                        <h3>Tröskel</h3>
+                                        <p id="activeThreshold" class="muted">–</p>
+                                    </div>
+                                </div>
+                                <div class="active-stacks">
+                                    <div>
+                                        <h3>Måstekrav</h3>
+                                        <ul id="activeRequirements" class="requirements-list"></ul>
+                                    </div>
+                                    <div>
+                                        <h3>Screeningfrågor</h3>
+                                        <ol id="activeQuestionList" class="question-preview"></ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="card">
+                            <header class="card-header">
+                                <h2>Registrera kandidat</h2>
+                                <p id="candidateFormHelper" class="muted">Välj en rekrytering för att aktivera formuläret.</p>
+                            </header>
+                            <form class="intake-form" id="candidateForm" novalidate>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="candidateName">Kandidatnamn</label>
+                                        <input type="text" id="candidateName" name="name" autocomplete="name" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="candidateExperience">År av erfarenhet</label>
+                                        <input type="number" id="candidateExperience" name="experience" min="0" max="50" step="1" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="candidateLocation">Ort</label>
+                                        <input type="text" id="candidateLocation" name="location" autocomplete="address-level2" required />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="candidatePitch">Kort presentation</label>
+                                        <textarea id="candidatePitch" name="pitch" rows="3" placeholder="Vad driver kandidaten?" required></textarea>
+                                    </div>
+                                </div>
+                                <div id="candidateQuestionFields" class="dynamic-questions"></div>
+                                <div class="intake-actions">
+                                    <button type="submit" class="button">Utvärdera kandidat</button>
+                                    <p class="form-feedback" id="candidateFeedback" role="status" aria-live="polite"></p>
+                                </div>
+                            </form>
+                        </article>
+
+                    </div>
+
+                    <div class="workspace-lane">
+                        <article class="card review-card">
+                            <header class="review-header">
+                                <div>
+                                    <h2>Rekryterarvy</h2>
+                                    <p class="muted">Kandidater som passerat tröskeln visas här en i taget.</p>
+                                </div>
+                                <div class="review-stats">
+                                    <span class="stat-badge">I kö: <strong id="pipelineCount">0</strong></span>
+                                    <span class="stat-badge">Accepterade: <strong id="acceptedCount">0</strong></span>
+                                </div>
+                            </header>
+                            <p class="form-feedback" id="reviewFeedback" role="status" aria-live="polite"></p>
+                            <div id="pipelineEmpty" class="empty-state">Inga kvalificerade kandidater ännu. När en kandidat uppfyller kraven dyker den upp här.</div>
+                            <div id="candidateReviewContent" class="review-content" aria-live="polite"></div>
+                            <div class="review-actions">
+                                <button type="button" id="rejectCandidateBtn" class="swipe-button no" disabled>Passa</button>
+                                <button type="button" id="acceptCandidateBtn" class="swipe-button yes" disabled>Tacka ja</button>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <strong>TandemTalent</strong>
+                    <p>Rekryteringsplattformen som kombinerar smart matchning med en dejtingapp-känsla.</p>
+                </div>
+                <div>
+                    <strong>Utforska</strong>
+                    <ul>
+                        <li><a href="losning.html">Lösningen</a></li>
+                        <li><a href="process.html">Processen</a></li>
+                        <li><a href="screening.html" class="is-active">Kandidatintag</a></li>
+                        <li><a href="case.html">Kundcase</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <strong>Kontakt</strong>
+                    <ul>
+                        <li><a href="mailto:hej@tandemtalent.se">hej@tandemtalent.se</a></li>
+                        <li><a href="tel:+46101234567">+46 (0)10 123 45 67</a></li>
+                        <li><a href="kontakt.html">Boka demo</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p>&copy; <span id="year"></span> TandemTalent. Skapad för rekryteringsbyråer som vill ligga steget före.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/app.js" defer></script>
+</body>
+</html>
