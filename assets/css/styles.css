@@ -28,6 +28,7 @@ header {
 }
 
 .container {
+    width: min(1040px, 92vw);
     width: min(1120px, 92vw);
     margin: 0 auto;
 }
@@ -455,6 +456,13 @@ fieldset legend {
 }
 
 .candidate-card {
+    background: linear-gradient(160deg, #ffffff 0%, #f6f6ff 100%);
+    border-radius: 20px;
+    padding: 24px;
+    display: grid;
+    gap: 14px;
+    border: 1px solid rgba(91, 91, 207, 0.08);
+    box-shadow: 0 18px 46px rgba(50, 50, 140, 0.12);
     background: white;
     border-radius: 18px;
     padding: 20px;
@@ -710,6 +718,11 @@ nav ul li a.is-active::after {
     gap: 20px;
 }
 
+.workspace-lane--focus .card {
+    border: 1px solid rgba(91, 91, 207, 0.18);
+    box-shadow: 0 28px 60px rgba(91, 91, 207, 0.18);
+}
+
 .card-header h2 {
     margin: 0;
 }
@@ -719,11 +732,25 @@ nav ul li a.is-active::after {
 }
 
 .screening-workspace {
+    background: linear-gradient(180deg, #f5f5fb 0%, #ffffff 80%);
+    padding: 80px 0;
     background: #ffffff;
 }
 
 .workspace-grid {
     display: grid;
+    gap: 32px;
+    align-items: start;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.workspace-lane {
+    display: grid;
+    gap: 28px;
+    align-content: start;
+}
+
+.workspace-lane--focus {
     gap: 32px;
 }
 
@@ -853,6 +880,9 @@ nav ul li a.is-active::after {
 }
 
 .review-card {
+    gap: 28px;
+    position: sticky;
+    top: 24px;
     gap: 24px;
 }
 
@@ -889,6 +919,7 @@ nav ul li a.is-active::after {
 .review-content {
     display: grid;
     gap: 16px;
+    justify-items: stretch;
 }
 
 .review-card .candidate-meta {
@@ -971,6 +1002,21 @@ button:disabled {
 }
 
 @media (min-width: 992px) {
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+    }
+}
+
+@media (min-width: 1200px) {
+    .workspace-grid {
+        grid-template-columns: 320px 360px 1fr;
+    }
+}
+
+@media (max-width: 991px) {
+    .review-card {
+        position: static;
     .workspace-grid {
         grid-template-columns: 360px 1fr;
     }
