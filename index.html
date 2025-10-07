@@ -1,11 +1,681 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sv">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TandemTalent – Rekrytering som känns som matchning</title>
+    <style>
+        :root {
+            --primary: #5b5bcf;
+            --primary-dark: #32328c;
+            --accent: #ff9d4d;
+            --bg: #f5f5fb;
+            --text: #1f1f3d;
+            --muted: #6b6b8f;
+            --card-bg: #ffffff;
+            --shadow: 0 24px 60px rgba(50, 50, 140, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        header {
+            background: radial-gradient(circle at 10% 20%, rgba(91, 91, 207, 0.2), transparent 60%),
+                radial-gradient(circle at 90% 10%, rgba(255, 157, 77, 0.3), transparent 55%),
+                linear-gradient(135deg, #ffffff 0%, #f5f5fb 50%, #e6e6f9 100%);
+            padding: 24px 0 80px;
+        }
+
+        .container {
+            width: min(1120px, 92vw);
+            margin: 0 auto;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 48px;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        nav .logo span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: var(--primary-dark);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .button:hover,
+        .button:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(91, 91, 207, 0.25);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            margin: 0 0 16px;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "Matcha";
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            background: rgba(91, 91, 207, 0.1);
+            border-radius: 50%;
+        }
+
+        .profile-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f3f3ff 100%);
+            border-radius: 20px;
+            padding: 20px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: #e6e6f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(91, 91, 207, 0.12);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .swipe-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .swipe-button {
+            flex: 1;
+            border: none;
+            border-radius: 999px;
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .swipe-button.no {
+            background: #ffe2e2;
+            color: #c93c3c;
+        }
+
+        .swipe-button.yes {
+            background: var(--primary);
+            color: white;
+        }
+
+        .swipe-button:hover,
+        .swipe-button:focus {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 48px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .feature-grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 16px;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(91, 91, 207, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .process-grid {
+            display: grid;
+            gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .process-step {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .process-step span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .process-step p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .metrics {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f3f3ff 100%);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .metric-card h3 {
+            font-size: 2rem;
+            margin: 0 0 8px;
+            color: var(--primary-dark);
+        }
+
+        .metric-card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .testimonial {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: "\201C";
+            font-size: 4rem;
+            color: rgba(91, 91, 207, 0.2);
+            position: absolute;
+            top: -24px;
+            left: 24px;
+        }
+
+        .testimonial p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .testimonial strong {
+            display: block;
+            margin-top: 16px;
+            color: var(--primary-dark);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #5b5bcf 0%, #8b60ff 100%);
+            border-radius: 28px;
+            padding: 56px 48px;
+            color: white;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            margin-bottom: 28px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .cta-section .button {
+            background: white;
+            color: var(--primary-dark);
+            box-shadow: none;
+        }
+
+        footer {
+            padding: 48px 0;
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: inherit;
+        }
+
+        @media (max-width: 720px) {
+            nav ul {
+                display: none;
+            }
+
+            header {
+                padding-bottom: 56px;
+            }
+
+            .hero-card {
+                order: -1;
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo" aria-label="TandemTalent startsida">
+                    <span>TT</span>
+                    TandemTalent
+                </a>
+                <ul>
+                    <li><a href="#losning">Lösningen</a></li>
+                    <li><a href="#process">Så funkar det</a></li>
+                    <li><a href="#case">Kundcase</a></li>
+                    <li><a href="#kontakt">Boka demo</a></li>
+                </ul>
+                <a href="#kontakt" class="button">Boka demo</a>
+            </nav>
+            <div class="hero">
+                <div>
+                    <h1>Möt kandidater som är redo för nästa steg – innan konkurrenten gör det</h1>
+                    <p>
+                        TandemTalent är rekryteringsplattformen som kombinerar matchningsteknik med en dejtingapp-känsla.
+                        Vi samlar, förkvalificerar och presenterar kandidater så att dina rekryterare kan fokusera på det
+                        de gör bäst: att skapa relationer.
+                    </p>
+                    <a href="#kontakt" class="button">Boka ett förutsättningslöst möte</a>
+                </div>
+                <div class="hero-card" aria-label="Exempel på kandidatvy">
+                    <div class="profile-card">
+                        <div class="profile-header">
+                            <div class="profile-avatar" aria-hidden="true">👩‍🔧</div>
+                            <div>
+                                <strong>Emilia Larsson</strong>
+                                <p style="margin: 4px 0; color: var(--muted);">Lagerspecialist • Göteborg</p>
+                                <div class="tag">Matchning: 94%</div>
+                            </div>
+                        </div>
+                        <p>
+                            "Jag drivs av att få logistik att flyta smidigt och vill in i ett team med högt tempo och tydliga mål."
+                        </p>
+                        <div>
+                            <strong>Nyckelkompetenser</strong>
+                            <p style="margin: 6px 0 0; color: var(--muted);">
+                                Truckkort A-B · Lean-processer · Ledarskap i skiftlag
+                            </p>
+                        </div>
+                        <div class="swipe-actions" aria-hidden="true">
+                            <button class="swipe-button no">Passa</button>
+                            <button class="swipe-button yes">Boka samtal</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="losning">
+            <div class="container">
+                <div class="section-header">
+                    <h2>En kandidatpipeline som alltid är redo att swipas</h2>
+                    <p>
+                        Vi bygger upp ett uppdaterat kandidatnätverk inom era prioriterade roller. Varje kandidat matchas mot
+                        era kravprofiler och presenteras i ett enkelt kortformat där rekryterarna snabbt ser drivkrafter,
+                        kompetens och nästa steg.
+                    </p>
+                </div>
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🤝</div>
+                        <h3>Smart matchning</h3>
+                        <p>
+                            Våra algoritmer väger samman erfarenhet, kompetens, personlig motivation och era must-haves för
+                            att bara visa relevanta kandidater.
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🗂️</div>
+                        <h3>Kandidatkort som säljer in</h3>
+                        <p>
+                            Genomtänkta profiler med foto, personligt statement, styrkor och rekommenderade nästa steg gör det
+                            enkelt att gå från intresse till kontakt.
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">⚙️</div>
+                        <h3>Automatisk förkvalificering</h3>
+                        <p>
+                            Kandidater som inte matchar er kravprofil sorteras bort redan innan de visas, vilket sparar tid och
+                            skapar bättre kandidat- och rekryterarupplevelse.
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">📊</div>
+                        <h3>Insikter i realtid</h3>
+                        <p>
+                            Följ pipelines, svarsfrekvens och tid till anställning i realtid. Dela insikter med kunder och få ett
+                            faktabaserat beslutsstöd.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="process" style="background: #ffffff;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Så tar vi er från behov till signerad kandidat</h2>
+                    <p>
+                        Med TandemTalent blir rekrytering en upplevelse med tempo. Vi driver flödet så att ni kan fokusera på kund- och kandidatdialogen.
+                    </p>
+                </div>
+                <div class="process-grid">
+                    <article class="process-step">
+                        <span>1</span>
+                        <h3>Profilworkshop</h3>
+                        <p>
+                            Tillsammans ringar vi in vilka roller, kompetenser och mjuka värden som ska prioriteras i er pipeline.
+                        </p>
+                    </article>
+                    <article class="process-step">
+                        <span>2</span>
+                        <h3>Talent Sourcing &amp; pre-screening</h3>
+                        <p>
+                            Vi skapar en skräddarsydd kampanj, samlar in kandidatdata och gör första urvalet baserat på era kriterier.
+                        </p>
+                    </article>
+                    <article class="process-step">
+                        <span>3</span>
+                        <h3>Matchningshub</h3>
+                        <p>
+                            Rekryterare får en smart, enkel översikt över kandidaterna och kan swipa, kommentera och boka nästa steg.
+                        </p>
+                    </article>
+                    <article class="process-step">
+                        <span>4</span>
+                        <h3>Aktivering &amp; uppföljning</h3>
+                        <p>
+                            Vi sköter uppföljningar, uppdaterar profiler och ger er data som underlag till kundpresentationer.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="metrics" aria-label="Resultat med TandemTalent">
+                    <div class="metric-card">
+                        <h3>3x</h3>
+                        <p>Snabbare tid till shortlist jämfört med traditionella processer.</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>85%</h3>
+                        <p>Kandidater som bokar ett möte efter första swipen.</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>92%</h3>
+                        <p>Nöjda kundteam tack vare transparent pipeline och insikter.</p>
+                    </div>
+                    <div class="metric-card">
+                        <h3>24/7</h3>
+                        <p>Kandidatflöde som uppdateras automatiskt varje vecka.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="case" style="background: #ffffff;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Kundcase</h2>
+                    <p>
+                        Se hur rekryteringsbyråer använder TandemTalent för att vinna fler uppdrag, skapa bättre kandidatupplevelse
+                        och leverera snabbare.
+                    </p>
+                </div>
+                <div class="testimonial-grid">
+                    <article class="testimonial">
+                        <p>
+                            "Med TandemTalent kan våra konsultchefer se exakt vilka kandidater som finns tillgängliga och swipa fram en shortlist på minuter. Vi har halverat vår tid till kundpresentation."
+                        </p>
+                        <strong>Petra Holm, VD på Nordic Logistics Rekrytering</strong>
+                    </article>
+                    <article class="testimonial">
+                        <p>
+                            "Vi får färdiga kandidatkort som känns personliga och ger ett professionellt första intryck. Att matchningsgraden redan är satt gör att vi vågar gå till kund snabbare."
+                        </p>
+                        <strong>Jonas Ek, Team Lead, PeopleFirst</strong>
+                    </article>
+                    <article class="testimonial">
+                        <p>
+                            "Systemet gör gallringen åt oss. Rekryterarna älskar swipe-funktionen, och kandidaterna uppskattar hur snabbt vi återkopplar." 
+                        </p>
+                        <strong>Mira Das, Operativ chef, Talentera</strong>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="section-header">
+                    <h2>Er branding – vår teknik</h2>
+                    <p>
+                        TandemTalent white-labelas enkelt och integreras i era befintliga system. Koppla på ATS, CRM eller
+                        interna dashboards för att hålla koll på kandidater, kundcase och kommunikation.
+                    </p>
+                </div>
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🔌</div>
+                        <h3>Integrationer</h3>
+                        <p>
+                            API och färdiga kopplingar till de vanligaste systemen gör implementationen snabb och smidig.
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🎯</div>
+                        <h3>Målgruppsanpassning</h3>
+                        <p>
+                            Segmentera kandidater efter bransch, region och senioritet. Skapa nischade pipelines för varje uppdrag.
+                        </p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon" aria-hidden="true">🛡️</div>
+                        <h3>Säkerhet &amp; integritet</h3>
+                        <p>
+                            GDPR-säkrad hantering av kandidatdata, samtyckesflöden och loggning av all aktivitet.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontakt">
+            <div class="container">
+                <div class="cta-section">
+                    <h2>Boka en demo och se TandemTalent live</h2>
+                    <p>
+                        Fyll i dina kontaktuppgifter så återkommer vi inom 24 timmar med en skräddarsydd demo. Vi visar hur ni
+                        kan bygga en swipbar kandidatbank för era kunder – oavsett om det gäller lager, tech eller specialistroller.
+                    </p>
+                    <a class="button" href="mailto:hej@tandemtalent.se">Kontakta oss</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> TandemTalent. Skapad för rekryteringsbyråer som vill ligga steget före.</p>
+            <p><a href="mailto:hej@tandemtalent.se">hej@tandemtalent.se</a> · <a href="tel:+4610123456">+46 10 123 45 67</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const yearEl = document.getElementById("year");
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+    </script>
 </body>
 </html>
