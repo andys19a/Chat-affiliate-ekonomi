@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Boka demo – TandemTalent</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body data-page="kontakt">
+    <header>
+        <div class="container">
+            <nav>
+                <a href="index.html" class="logo" aria-label="TandemTalent startsida">
+                    <span>TT</span>
+                    TandemTalent
+                </a>
+                <ul>
+                    <li><a href="losning.html">Lösningen</a></li>
+                    <li><a href="process.html">Så funkar det</a></li>
+                    <li><a href="screening.html">Kandidatintag</a></li>
+                    <li><a href="case.html">Kundcase</a></li>
+                    <li><a href="kontakt.html" class="is-active">Boka demo</a></li>
+                </ul>
+                <a href="kontakt.html" class="button">Boka demo</a>
+            </nav>
+            <div class="page-hero">
+                <h1>Se TandemTalent live</h1>
+                <p>
+                    Boka ett förutsättningslöst möte där vi går igenom hur du kan sätta upp egna rekryteringar, screeningfrågor och kundflöden.
+                </p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section>
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-copy">
+                        <h2>Boka en demo och få en skräddarsydd plan</h2>
+                        <p>
+                            Fyll i dina uppgifter så återkommer vi inom 24 timmar. Vi förbereder ett case baserat på era vanligaste roller och visar hur screening, swipe och kundrapportering ser ut.
+                        </p>
+                        <ul class="contact-list">
+                            <li>45 min genomgång av plattformen</li>
+                            <li>Diskussion om era kravprofiler och frågor</li>
+                            <li>Roadmap för onboarding och implementation</li>
+                        </ul>
+                        <p><strong>Direktkontakt:</strong> <a href="mailto:hej@tandemtalent.se">hej@tandemtalent.se</a> · <a href="tel:+46101234567">+46 (0)10 123 45 67</a></p>
+                    </div>
+                    <form class="intake-form contact-form" id="contactForm">
+                        <div class="form-group">
+                            <label for="contactName">Ditt namn</label>
+                            <input type="text" id="contactName" name="name" autocomplete="name" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactCompany">Företag</label>
+                            <input type="text" id="contactCompany" name="company" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">E-post</label>
+                            <input type="email" id="contactEmail" name="email" autocomplete="email" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactPhone">Telefon</label>
+                            <input type="tel" id="contactPhone" name="phone" autocomplete="tel" />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactRoles">Vilka roller rekryterar ni främst?</label>
+                            <input type="text" id="contactRoles" name="roles" />
+                        </div>
+                        <div class="form-group">
+                            <label for="contactMessage">Vad vill du att vi fokuserar på?</label>
+                            <textarea id="contactMessage" name="message" rows="4"></textarea>
+                        </div>
+                        <div class="intake-actions">
+                            <button type="submit" class="button">Skicka förfrågan</button>
+                            <p class="form-feedback" id="contactFeedback" role="status" aria-live="polite"></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <strong>TandemTalent</strong>
+                    <p>Rekryteringsplattformen som kombinerar smart matchning med en dejtingapp-känsla.</p>
+                </div>
+                <div>
+                    <strong>Utforska</strong>
+                    <ul>
+                        <li><a href="losning.html">Lösningen</a></li>
+                        <li><a href="process.html">Processen</a></li>
+                        <li><a href="screening.html">Kandidatintag</a></li>
+                        <li><a href="case.html">Kundcase</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <strong>Kontakt</strong>
+                    <ul>
+                        <li><a href="mailto:hej@tandemtalent.se">hej@tandemtalent.se</a></li>
+                        <li><a href="tel:+46101234567">+46 (0)10 123 45 67</a></li>
+                        <li><a href="kontakt.html" class="is-active">Boka demo</a></li>
+                    </ul>
+                </div>
+            </div>
+            <p>&copy; <span id="year"></span> TandemTalent. Skapad för rekryteringsbyråer som vill ligga steget före.</p>
+        </div>
+    </footer>
+
+    <script src="assets/js/app.js" defer></script>
+</body>
+</html>
