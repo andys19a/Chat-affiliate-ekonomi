@@ -29,6 +29,7 @@ header {
 
 .container {
     width: min(1040px, 92vw);
+    width: min(1120px, 92vw);
     margin: 0 auto;
 }
 
@@ -462,6 +463,12 @@ fieldset legend {
     gap: 14px;
     border: 1px solid rgba(91, 91, 207, 0.08);
     box-shadow: 0 18px 46px rgba(50, 50, 140, 0.12);
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    display: grid;
+    gap: 12px;
+    border: 1px solid rgba(91, 91, 207, 0.1);
 }
 
 .candidate-empty {
@@ -727,6 +734,7 @@ nav ul li a.is-active::after {
 .screening-workspace {
     background: linear-gradient(180deg, #f5f5fb 0%, #ffffff 80%);
     padding: 80px 0;
+    background: #ffffff;
 }
 
 .workspace-grid {
@@ -744,6 +752,12 @@ nav ul li a.is-active::after {
 
 .workspace-lane--focus {
     gap: 32px;
+}
+
+.workspace-column {
+    display: grid;
+    gap: 32px;
+    align-content: start;
 }
 
 .form-grid {
@@ -869,6 +883,7 @@ nav ul li a.is-active::after {
     gap: 28px;
     position: sticky;
     top: 24px;
+    gap: 24px;
 }
 
 .review-header {
@@ -1002,6 +1017,13 @@ button:disabled {
 @media (max-width: 991px) {
     .review-card {
         position: static;
+    .workspace-grid {
+        grid-template-columns: 360px 1fr;
+    }
+
+    .contact-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
     }
 }
 
