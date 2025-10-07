@@ -273,6 +273,241 @@
             margin: 0;
         }
 
+        .intake-grid {
+            display: grid;
+            gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            align-items: start;
+        }
+
+        .intake-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 24px;
+        }
+
+        .intake-card h3 {
+            margin: 0;
+        }
+
+        .intake-card p {
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .intake-card ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--muted);
+            display: grid;
+            gap: 8px;
+            line-height: 1.6;
+        }
+
+        .intake-form {
+            display: grid;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            border: 1px solid #d8d8ef;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: #f9f9ff;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: 2px solid rgba(91, 91, 207, 0.35);
+            outline-offset: 2px;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 16px;
+        }
+
+        fieldset legend {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .radio-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .radio-pill {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #d8d8ef;
+            border-radius: 999px;
+            padding: 2px;
+            background: #ffffff;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .radio-pill input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-pill span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 48px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: inherit;
+        }
+
+        .radio-pill input:focus-visible + span {
+            outline: 2px solid rgba(91, 91, 207, 0.35);
+            outline-offset: 2px;
+            border-radius: 999px;
+        }
+
+        .radio-pill input:checked + span {
+            background: var(--primary);
+            color: white;
+        }
+
+        .intake-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .form-feedback {
+            font-weight: 600;
+        }
+
+        .form-feedback.success {
+            color: #1a8654;
+        }
+
+        .form-feedback.error {
+            color: #c93c3c;
+        }
+
+        .candidate-database {
+            background: linear-gradient(145deg, #ffffff 0%, #f3f3ff 100%);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 24px;
+        }
+
+        .candidate-database header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .candidate-database header h3 {
+            margin: 0;
+        }
+
+        .candidate-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(91, 91, 207, 0.12);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .candidate-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 16px;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 18px;
+            padding: 20px;
+            display: grid;
+            gap: 12px;
+            border: 1px solid rgba(91, 91, 207, 0.1);
+        }
+
+        .candidate-empty {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .candidate-card strong {
+            font-size: 1.05rem;
+            color: var(--primary-dark);
+        }
+
+        .candidate-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .candidate-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(91, 91, 207, 0.1);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 999px;
+        }
+
+        .candidate-score {
+            font-weight: 600;
+            color: #1a8654;
+        }
+
+        .candidate-added {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
         .process-grid {
             display: grid;
             gap: 32px;
@@ -427,6 +662,7 @@
                 <ul>
                     <li><a href="#losning">Lösningen</a></li>
                     <li><a href="#process">Så funkar det</a></li>
+                    <li><a href="#intake">Kandidatintag</a></li>
                     <li><a href="#case">Kundcase</a></li>
                     <li><a href="#kontakt">Boka demo</a></li>
                 </ul>
@@ -650,6 +886,137 @@
             </div>
         </section>
 
+        <section id="intake" style="background: #ffffff;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Automatiserad kandidatscreening</h2>
+                    <p>
+                        Låt kandidater svara på fem ja/nej-frågor som speglar kravprofilen. När tillräckligt många svar är
+                        träffsäkra placeras kandidaten i databasen automatiskt – annars tackas personen av med tydlig
+                        återkoppling.
+                    </p>
+                </div>
+                <div class="intake-grid">
+                    <article class="intake-card" aria-labelledby="intake-how">
+                        <div>
+                            <h3 id="intake-how">Så funkar kvalificeringen</h3>
+                            <p>
+                                Screeningmotorn går igenom varje svar och jämför mot era uppsatta kriterier innan en profil
+                                görs synlig för rekryterarna.
+                            </p>
+                        </div>
+                        <ul>
+                            <li>Fem ja/nej-frågor anpassade efter rollprofilen och er kunds krav.</li>
+                            <li>Automatisk beräkning av matchningspoäng baserat på kandidatens svar.</li>
+                            <li>Endast relevanta profiler syns i swipe-flödet – övriga stannar utanför processen.</li>
+                        </ul>
+                        <p><strong>Tröskel:</strong> minst 4 av 5 "ja" krävs för att räknas som relevant.</p>
+                    </article>
+                    <article class="intake-card" aria-labelledby="candidate-form-heading">
+                        <div>
+                            <h3 id="candidate-form-heading">Registrera kandidat</h3>
+                            <p>Fyll i kandidatens uppgifter och låt TandemTalents screening göra grovjobbet.</p>
+                        </div>
+                        <form class="intake-form" id="candidateForm" novalidate>
+                            <div class="form-group">
+                                <label for="candidateName">Kandidatnamn</label>
+                                <input type="text" id="candidateName" name="name" autocomplete="name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="candidateRole">Sökt roll</label>
+                                <input type="text" id="candidateRole" name="role" placeholder="Ex. Lagerarbetare" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="candidateExperience">År av erfarenhet</label>
+                                <input type="number" id="candidateExperience" name="experience" min="0" max="50" step="1" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="candidateLocation">Ort</label>
+                                <input type="text" id="candidateLocation" name="location" autocomplete="address-level2" required />
+                            </div>
+                            <fieldset>
+                                <legend>Har kandidaten minst 6 månaders erfarenhet av lagerarbete?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q1" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q1" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Är kandidaten tillgänglig att starta inom 30 dagar?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q2" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q2" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Kan kandidaten arbeta skift eller kvällspass vid behov?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q3" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q3" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Har kandidaten giltigt truckkort eller motsvarande certifiering?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q4" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q4" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Talar kandidaten svenska på yrkesmässig nivå?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q5" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q5" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <div class="intake-actions">
+                                <button type="submit" class="button">Utvärdera kandidat</button>
+                                <p class="form-feedback" id="candidateFeedback" role="status" aria-live="polite"></p>
+                            </div>
+                        </form>
+                    </article>
+                    <article class="candidate-database" aria-labelledby="candidate-database-heading">
+                        <header>
+                            <h3 id="candidate-database-heading">Relevanta kandidater</h3>
+                            <span class="candidate-count"><span id="candidateCount">0</span> i databasen</span>
+                        </header>
+                        <p class="candidate-empty" id="candidateEmpty">Inga kvalificerade kandidater ännu. Lägg till din första match.</p>
+                        <ul class="candidate-list" id="candidateList" aria-live="polite" aria-label="Lista över kvalificerade kandidater"></ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
         <section id="kontakt">
             <div class="container">
                 <div class="cta-section">
@@ -676,6 +1043,205 @@
         if (yearEl) {
             yearEl.textContent = new Date().getFullYear();
         }
+
+        (function () {
+            const storageKey = "tandemTalentCandidates";
+            const relevantThreshold = 4;
+
+            const form = document.getElementById("candidateForm");
+            const feedback = document.getElementById("candidateFeedback");
+            const list = document.getElementById("candidateList");
+            const countEl = document.getElementById("candidateCount");
+            const emptyState = document.getElementById("candidateEmpty");
+
+            if (!form || !feedback || !list || !countEl || !emptyState) {
+                return;
+            }
+
+            const state = {
+                candidates: [],
+            };
+
+            const supportsLocalStorage = (() => {
+                try {
+                    const testKey = "__tt_test__";
+                    window.localStorage.setItem(testKey, "1");
+                    window.localStorage.removeItem(testKey);
+                    return true;
+                } catch (error) {
+                    console.warn("LocalStorage är inte tillgängligt. Kandidater sparas inte mellan besök.", error);
+                    return false;
+                }
+            })();
+
+            const clearFeedback = () => {
+                feedback.textContent = "";
+                feedback.classList.remove("success", "error");
+            };
+
+            const showFeedback = (message, type) => {
+                feedback.textContent = message;
+                feedback.classList.remove("success", "error");
+                if (type) {
+                    feedback.classList.add(type);
+                }
+            };
+
+            const updateEmptyState = () => {
+                if (!state.candidates.length) {
+                    emptyState.style.display = "block";
+                } else {
+                    emptyState.style.display = "none";
+                }
+            };
+
+            const updateCount = () => {
+                countEl.textContent = state.candidates.length.toString();
+            };
+
+            const createCandidateElement = (candidate) => {
+                const listItem = document.createElement("li");
+                listItem.className = "candidate-card";
+
+                const name = document.createElement("strong");
+                name.textContent = candidate.name;
+
+                const meta = document.createElement("div");
+                meta.className = "candidate-meta";
+
+                const role = document.createElement("span");
+                role.textContent = `🎯 ${candidate.role}`;
+
+                const location = document.createElement("span");
+                location.textContent = `📍 ${candidate.location}`;
+
+                const experience = document.createElement("span");
+                experience.textContent = `🗓️ ${candidate.experience} år`;
+
+                meta.append(role, location, experience);
+
+                const score = document.createElement("p");
+                score.className = "candidate-score";
+                score.textContent = `Matchningspoäng: ${candidate.score}% (${candidate.positiveAnswers} av 5 "ja")`;
+
+                const added = document.createElement("p");
+                added.className = "candidate-added";
+                const addedDate = candidate.addedAt ? new Date(candidate.addedAt) : new Date();
+                added.textContent = `Tillagd ${addedDate.toLocaleDateString("sv-SE", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                })} kl. ${addedDate.toLocaleTimeString("sv-SE", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })}`;
+
+                listItem.append(name, meta, score, added);
+                return listItem;
+            };
+
+            const renderCandidates = () => {
+                list.innerHTML = "";
+                state.candidates.forEach((candidate) => {
+                    list.appendChild(createCandidateElement(candidate));
+                });
+                updateCount();
+                updateEmptyState();
+            };
+
+            const loadCandidates = () => {
+                if (!supportsLocalStorage) {
+                    state.candidates = [];
+                    renderCandidates();
+                    return;
+                }
+
+                try {
+                    const stored = window.localStorage.getItem(storageKey);
+                    state.candidates = stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.warn("Kunde inte läsa kandidater från lagring.", error);
+                    state.candidates = [];
+                }
+
+                renderCandidates();
+            };
+
+            const persistCandidates = () => {
+                if (!supportsLocalStorage) {
+                    return;
+                }
+
+                try {
+                    window.localStorage.setItem(storageKey, JSON.stringify(state.candidates));
+                } catch (error) {
+                    console.warn("Kunde inte spara kandidater till lagring.", error);
+                }
+            };
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                clearFeedback();
+
+                const formData = new FormData(form);
+                const name = (formData.get("name") || "").toString().trim();
+                const role = (formData.get("role") || "").toString().trim();
+                const experienceValue = (formData.get("experience") || "").toString().trim();
+                const location = (formData.get("location") || "").toString().trim();
+
+                if (!name || !role || !experienceValue || !location) {
+                    showFeedback("Fyll i alla fält innan du skickar in kandidaten.", "error");
+                    return;
+                }
+
+                const experience = Number(experienceValue);
+                if (!Number.isFinite(experience) || experience < 0) {
+                    showFeedback("Ange antal år av erfarenhet som ett heltal 0 eller större.", "error");
+                    return;
+                }
+
+                const answers = [];
+                for (let i = 1; i <= 5; i += 1) {
+                    const value = formData.get(`q${i}`);
+                    if (!value) {
+                        showFeedback("Besvara samtliga fem frågor för att gå vidare.", "error");
+                        return;
+                    }
+                    answers.push(value);
+                }
+
+                const positiveAnswers = answers.filter((answer) => answer === "ja").length;
+
+                if (positiveAnswers < relevantThreshold) {
+                    showFeedback("Kandidaten uppfyller inte kraven och sparas därför inte i databasen.", "error");
+                    return;
+                }
+
+                const candidate = {
+                    id: Date.now(),
+                    name,
+                    role,
+                    experience,
+                    location,
+                    answers,
+                    positiveAnswers,
+                    score: Math.round((positiveAnswers / 5) * 100),
+                    addedAt: new Date().toISOString(),
+                };
+
+                state.candidates = [candidate, ...state.candidates];
+                renderCandidates();
+                persistCandidates();
+                form.reset();
+                showFeedback("Kandidaten har kvalificerats och lagts till i databasen.", "success");
+                const nameField = document.getElementById("candidateName");
+                if (nameField) {
+                    nameField.focus();
+                }
+            });
+
+            loadCandidates();
+        })();
     </script>
 </body>
 </html>
