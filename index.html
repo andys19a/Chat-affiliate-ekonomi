@@ -11,6 +11,658 @@
         <div class="container">
             <nav>
                 <a href="index.html" class="logo" aria-label="TandemTalent startsida">
+    <style>
+        :root {
+            --primary: #5b5bcf;
+            --primary-dark: #32328c;
+            --accent: #ff9d4d;
+            --bg: #f5f5fb;
+            --text: #1f1f3d;
+            --muted: #6b6b8f;
+            --card-bg: #ffffff;
+            --shadow: 0 24px 60px rgba(50, 50, 140, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+            color: var(--text);
+            background: var(--bg);
+        }
+
+        header {
+            background: radial-gradient(circle at 10% 20%, rgba(91, 91, 207, 0.2), transparent 60%),
+                radial-gradient(circle at 90% 10%, rgba(255, 157, 77, 0.3), transparent 55%),
+                linear-gradient(135deg, #ffffff 0%, #f5f5fb 50%, #e6e6f9 100%);
+            padding: 24px 0 80px;
+        }
+
+        .container {
+            width: min(1120px, 92vw);
+            margin: 0 auto;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 48px;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 1.25rem;
+        }
+
+        nav .logo span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            font-size: 1.2rem;
+            box-shadow: var(--shadow);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 24px;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--muted);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            color: var(--primary-dark);
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            border-radius: 999px;
+            font-weight: 600;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            box-shadow: var(--shadow);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .button:hover,
+        .button:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(91, 91, 207, 0.25);
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            align-items: center;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.2rem);
+            margin: 0 0 16px;
+            letter-spacing: -0.03em;
+        }
+
+        .hero p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: var(--muted);
+            margin-bottom: 28px;
+        }
+
+        .hero-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-card::before {
+            content: "Matcha";
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            background: rgba(91, 91, 207, 0.1);
+            border-radius: 50%;
+        }
+
+        .profile-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f3f3ff 100%);
+            border-radius: 20px;
+            padding: 20px;
+            display: grid;
+            gap: 16px;
+        }
+
+        .profile-header {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            background: #e6e6f9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(91, 91, 207, 0.12);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .swipe-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .swipe-button {
+            flex: 1;
+            border: none;
+            border-radius: 999px;
+            padding: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .swipe-button.no {
+            background: #ffe2e2;
+            color: #c93c3c;
+        }
+
+        .swipe-button.yes {
+            background: var(--primary);
+            color: white;
+        }
+
+        .swipe-button:hover,
+        .swipe-button:focus {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 680px;
+            margin: 0 auto 48px;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            margin-bottom: 16px;
+        }
+
+        .section-header p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .feature-grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 16px;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(91, 91, 207, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .intake-grid {
+            display: grid;
+            gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            align-items: start;
+        }
+
+        .intake-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 24px;
+        }
+
+        .intake-card h3 {
+            margin: 0;
+        }
+
+        .intake-card p {
+            color: var(--muted);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        .intake-card ul {
+            margin: 0;
+            padding-left: 20px;
+            color: var(--muted);
+            display: grid;
+            gap: 8px;
+            line-height: 1.6;
+        }
+
+        .intake-form {
+            display: grid;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: grid;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 600;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="number"],
+        .form-group select,
+        .form-group textarea {
+            border: 1px solid #d8d8ef;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: #f9f9ff;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: 2px solid rgba(91, 91, 207, 0.35);
+            outline-offset: 2px;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 16px;
+        }
+
+        fieldset legend {
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .radio-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .radio-pill {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #d8d8ef;
+            border-radius: 999px;
+            padding: 2px;
+            background: #ffffff;
+            cursor: pointer;
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .radio-pill input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .radio-pill span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 48px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: inherit;
+        }
+
+        .radio-pill input:focus-visible + span {
+            outline: 2px solid rgba(91, 91, 207, 0.35);
+            outline-offset: 2px;
+            border-radius: 999px;
+        }
+
+        .radio-pill input:checked + span {
+            background: var(--primary);
+            color: white;
+        }
+
+        .intake-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .form-feedback {
+            font-weight: 600;
+        }
+
+        .form-feedback.success {
+            color: #1a8654;
+        }
+
+        .form-feedback.error {
+            color: #c93c3c;
+        }
+
+        .candidate-database {
+            background: linear-gradient(145deg, #ffffff 0%, #f3f3ff 100%);
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            display: grid;
+            gap: 24px;
+        }
+
+        .candidate-database header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .candidate-database header h3 {
+            margin: 0;
+        }
+
+        .candidate-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(91, 91, 207, 0.12);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-weight: 600;
+        }
+
+        .candidate-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            gap: 16px;
+        }
+
+        .candidate-card {
+            background: white;
+            border-radius: 18px;
+            padding: 20px;
+            display: grid;
+            gap: 12px;
+            border: 1px solid rgba(91, 91, 207, 0.1);
+        }
+
+        .candidate-empty {
+            color: var(--muted);
+            font-size: 0.95rem;
+        }
+
+        .candidate-card strong {
+            font-size: 1.05rem;
+            color: var(--primary-dark);
+        }
+
+        .candidate-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .candidate-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(91, 91, 207, 0.1);
+            color: var(--primary-dark);
+            padding: 6px 12px;
+            border-radius: 999px;
+        }
+
+        .candidate-score {
+            font-weight: 600;
+            color: #1a8654;
+        }
+
+        .candidate-added {
+            font-size: 0.85rem;
+            color: var(--muted);
+        }
+
+        .process-grid {
+            display: grid;
+            gap: 32px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        }
+
+        .process-step {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .process-step span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--primary);
+            color: white;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .process-step p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .metrics {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+
+        .metric-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f3f3ff 100%);
+            border-radius: 20px;
+            padding: 24px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .metric-card h3 {
+            font-size: 2rem;
+            margin: 0 0 8px;
+            color: var(--primary-dark);
+        }
+
+        .metric-card p {
+            margin: 0;
+            color: var(--muted);
+        }
+
+        .testimonial-grid {
+            display: grid;
+            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .testimonial {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .testimonial::before {
+            content: "\201C";
+            font-size: 4rem;
+            color: rgba(91, 91, 207, 0.2);
+            position: absolute;
+            top: -24px;
+            left: 24px;
+        }
+
+        .testimonial p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .testimonial strong {
+            display: block;
+            margin-top: 16px;
+            color: var(--primary-dark);
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #5b5bcf 0%, #8b60ff 100%);
+            border-radius: 28px;
+            padding: 56px 48px;
+            color: white;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-section h2 {
+            font-size: clamp(2rem, 4vw, 2.6rem);
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            margin-bottom: 28px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .cta-section .button {
+            background: white;
+            color: var(--primary-dark);
+            box-shadow: none;
+        }
+
+        footer {
+            padding: 48px 0;
+            color: var(--muted);
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: inherit;
+        }
+
+        @media (max-width: 720px) {
+            nav ul {
+                display: none;
+            }
+
+            header {
+                padding-bottom: 56px;
+            }
+
+            .hero-card {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo" aria-label="TandemTalent startsida">
                     <span>TT</span>
                     TandemTalent
                 </a>
@@ -22,6 +674,13 @@
                     <li><a href="kontakt.html">Boka demo</a></li>
                 </ul>
                 <a href="kontakt.html" class="button">Boka demo</a>
+                    <li><a href="#losning">Lösningen</a></li>
+                    <li><a href="#process">Så funkar det</a></li>
+                    <li><a href="#intake">Kandidatintag</a></li>
+                    <li><a href="#case">Kundcase</a></li>
+                    <li><a href="#kontakt">Boka demo</a></li>
+                </ul>
+                <a href="#kontakt" class="button">Boka demo</a>
             </nav>
             <div class="hero">
                 <div>
@@ -35,6 +694,7 @@
                         <a href="screening.html" class="button">Testa screeningflödet</a>
                         <a href="kontakt.html" class="button button-secondary">Prata med oss</a>
                     </div>
+                    <a href="#kontakt" class="button">Boka ett förutsättningslöst möte</a>
                 </div>
                 <div class="hero-card" aria-label="Exempel på kandidatvy">
                     <div class="profile-card">
@@ -67,6 +727,7 @@
 
     <main>
         <section>
+        <section id="losning">
             <div class="container">
                 <div class="section-header">
                     <h2>En kandidatpipeline som alltid är redo att swipas</h2>
@@ -114,6 +775,7 @@
         </section>
 
         <section style="background: #ffffff;">
+        <section id="process" style="background: #ffffff;">
             <div class="container">
                 <div class="section-header">
                     <h2>Så tar vi er från behov till signerad kandidat</h2>
@@ -132,6 +794,7 @@
                     <article class="process-step">
                         <span>2</span>
                         <h3>Talent sourcing &amp; pre-screening</h3>
+                        <h3>Talent Sourcing &amp; pre-screening</h3>
                         <p>
                             Vi skapar en skräddarsydd kampanj, samlar in kandidatdata och gör första urvalet baserat på era kriterier.
                         </p>
@@ -178,11 +841,14 @@
         </section>
 
         <section style="background: #ffffff;">
+        <section id="case" style="background: #ffffff;">
             <div class="container">
                 <div class="section-header">
                     <h2>Kundcase</h2>
                     <p>
                         Se hur rekryteringsbyråer använder TandemTalent för att vinna fler uppdrag, skapa bättre kandidatupplevelse och leverera snabbare.
+                        Se hur rekryteringsbyråer använder TandemTalent för att vinna fler uppdrag, skapa bättre kandidatupplevelse
+                        och leverera snabbare.
                     </p>
                 </div>
                 <div class="testimonial-grid">
@@ -201,6 +867,7 @@
                     <article class="testimonial">
                         <p>
                             "Systemet gör gallringen åt oss. Rekryterarna älskar swipe-funktionen, och kandidaterna uppskattar hur snabbt vi återkopplar."
+                            "Systemet gör gallringen åt oss. Rekryterarna älskar swipe-funktionen, och kandidaterna uppskattar hur snabbt vi återkopplar." 
                         </p>
                         <strong>Mira Das, Operativ chef, Talentera</strong>
                     </article>
@@ -214,6 +881,8 @@
                     <h2>Er branding – vår teknik</h2>
                     <p>
                         TandemTalent white-labelas enkelt och integreras i era befintliga system. Koppla på ATS, CRM eller interna dashboards för att hålla koll på kandidater, kundcase och kommunikation.
+                        TandemTalent white-labelas enkelt och integreras i era befintliga system. Koppla på ATS, CRM eller
+                        interna dashboards för att hålla koll på kandidater, kundcase och kommunikation.
                     </p>
                 </div>
                 <div class="feature-grid">
@@ -243,6 +912,138 @@
         </section>
 
         <section>
+        <section id="intake" style="background: #ffffff;">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Automatiserad kandidatscreening</h2>
+                    <p>
+                        Låt kandidater svara på fem ja/nej-frågor som speglar kravprofilen. När tillräckligt många svar är
+                        träffsäkra placeras kandidaten i databasen automatiskt – annars tackas personen av med tydlig
+                        återkoppling.
+                    </p>
+                </div>
+                <div class="intake-grid">
+                    <article class="intake-card" aria-labelledby="intake-how">
+                        <div>
+                            <h3 id="intake-how">Så funkar kvalificeringen</h3>
+                            <p>
+                                Screeningmotorn går igenom varje svar och jämför mot era uppsatta kriterier innan en profil
+                                görs synlig för rekryterarna.
+                            </p>
+                        </div>
+                        <ul>
+                            <li>Fem ja/nej-frågor anpassade efter rollprofilen och er kunds krav.</li>
+                            <li>Automatisk beräkning av matchningspoäng baserat på kandidatens svar.</li>
+                            <li>Endast relevanta profiler syns i swipe-flödet – övriga stannar utanför processen.</li>
+                        </ul>
+                        <p><strong>Tröskel:</strong> minst 4 av 5 "ja" krävs för att räknas som relevant.</p>
+                    </article>
+                    <article class="intake-card" aria-labelledby="candidate-form-heading">
+                        <div>
+                            <h3 id="candidate-form-heading">Registrera kandidat</h3>
+                            <p>Fyll i kandidatens uppgifter och låt TandemTalents screening göra grovjobbet.</p>
+                        </div>
+                        <form class="intake-form" id="candidateForm" novalidate>
+                            <div class="form-group">
+                                <label for="candidateName">Kandidatnamn</label>
+                                <input type="text" id="candidateName" name="name" autocomplete="name" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="candidateRole">Sökt roll</label>
+                                <input type="text" id="candidateRole" name="role" placeholder="Ex. Lagerarbetare" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="candidateExperience">År av erfarenhet</label>
+                                <input type="number" id="candidateExperience" name="experience" min="0" max="50" step="1" required />
+                            </div>
+                            <div class="form-group">
+                                <label for="candidateLocation">Ort</label>
+                                <input type="text" id="candidateLocation" name="location" autocomplete="address-level2" required />
+                            </div>
+                            <fieldset>
+                                <legend>Har kandidaten minst 6 månaders erfarenhet av lagerarbete?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q1" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q1" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Är kandidaten tillgänglig att starta inom 30 dagar?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q2" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q2" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Kan kandidaten arbeta skift eller kvällspass vid behov?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q3" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q3" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Har kandidaten giltigt truckkort eller motsvarande certifiering?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q4" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q4" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <fieldset>
+                                <legend>Talar kandidaten svenska på yrkesmässig nivå?</legend>
+                                <div class="radio-options">
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q5" value="ja" required />
+                                        <span>Ja</span>
+                                    </label>
+                                    <label class="radio-pill">
+                                        <input type="radio" name="q5" value="nej" required />
+                                        <span>Nej</span>
+                                    </label>
+                                </div>
+                            </fieldset>
+                            <div class="intake-actions">
+                                <button type="submit" class="button">Utvärdera kandidat</button>
+                                <p class="form-feedback" id="candidateFeedback" role="status" aria-live="polite"></p>
+                            </div>
+                        </form>
+                    </article>
+                    <article class="candidate-database" aria-labelledby="candidate-database-heading">
+                        <header>
+                            <h3 id="candidate-database-heading">Relevanta kandidater</h3>
+                            <span class="candidate-count"><span id="candidateCount">0</span> i databasen</span>
+                        </header>
+                        <p class="candidate-empty" id="candidateEmpty">Inga kvalificerade kandidater ännu. Lägg till din första match.</p>
+                        <ul class="candidate-list" id="candidateList" aria-live="polite" aria-label="Lista över kvalificerade kandidater"></ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="kontakt">
             <div class="container">
                 <div class="cta-section">
                     <h2>Boka en demo och se TandemTalent live</h2>
@@ -250,6 +1051,10 @@
                         Fyll i dina kontaktuppgifter så återkommer vi inom 24 timmar med en skräddarsydd demo. Vi visar hur ni kan lansera er egen swipe-upplevelse för rekrytering.
                     </p>
                     <a href="kontakt.html" class="button">Boka demo</a>
+                        Fyll i dina kontaktuppgifter så återkommer vi inom 24 timmar med en skräddarsydd demo. Vi visar hur ni
+                        kan bygga en swipbar kandidatbank för era kunder – oavsett om det gäller lager, tech eller specialistroller.
+                    </p>
+                    <a class="button" href="mailto:hej@tandemtalent.se">Kontakta oss</a>
                 </div>
             </div>
         </section>
@@ -285,5 +1090,216 @@
     </footer>
 
     <script src="assets/js/app.js" defer></script>
+            <p>&copy; <span id="year"></span> TandemTalent. Skapad för rekryteringsbyråer som vill ligga steget före.</p>
+            <p><a href="mailto:hej@tandemtalent.se">hej@tandemtalent.se</a> · <a href="tel:+4610123456">+46 10 123 45 67</a></p>
+        </div>
+    </footer>
+    <script src="assets/js/app.js" defer></script>
+
+    <script>
+        const yearEl = document.getElementById("year");
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear();
+        }
+
+        (function () {
+            const storageKey = "tandemTalentCandidates";
+            const relevantThreshold = 4;
+
+            const form = document.getElementById("candidateForm");
+            const feedback = document.getElementById("candidateFeedback");
+            const list = document.getElementById("candidateList");
+            const countEl = document.getElementById("candidateCount");
+            const emptyState = document.getElementById("candidateEmpty");
+
+            if (!form || !feedback || !list || !countEl || !emptyState) {
+                return;
+            }
+
+            const state = {
+                candidates: [],
+            };
+
+            const supportsLocalStorage = (() => {
+                try {
+                    const testKey = "__tt_test__";
+                    window.localStorage.setItem(testKey, "1");
+                    window.localStorage.removeItem(testKey);
+                    return true;
+                } catch (error) {
+                    console.warn("LocalStorage är inte tillgängligt. Kandidater sparas inte mellan besök.", error);
+                    return false;
+                }
+            })();
+
+            const clearFeedback = () => {
+                feedback.textContent = "";
+                feedback.classList.remove("success", "error");
+            };
+
+            const showFeedback = (message, type) => {
+                feedback.textContent = message;
+                feedback.classList.remove("success", "error");
+                if (type) {
+                    feedback.classList.add(type);
+                }
+            };
+
+            const updateEmptyState = () => {
+                if (!state.candidates.length) {
+                    emptyState.style.display = "block";
+                } else {
+                    emptyState.style.display = "none";
+                }
+            };
+
+            const updateCount = () => {
+                countEl.textContent = state.candidates.length.toString();
+            };
+
+            const createCandidateElement = (candidate) => {
+                const listItem = document.createElement("li");
+                listItem.className = "candidate-card";
+
+                const name = document.createElement("strong");
+                name.textContent = candidate.name;
+
+                const meta = document.createElement("div");
+                meta.className = "candidate-meta";
+
+                const role = document.createElement("span");
+                role.textContent = `🎯 ${candidate.role}`;
+
+                const location = document.createElement("span");
+                location.textContent = `📍 ${candidate.location}`;
+
+                const experience = document.createElement("span");
+                experience.textContent = `🗓️ ${candidate.experience} år`;
+
+                meta.append(role, location, experience);
+
+                const score = document.createElement("p");
+                score.className = "candidate-score";
+                score.textContent = `Matchningspoäng: ${candidate.score}% (${candidate.positiveAnswers} av 5 "ja")`;
+
+                const added = document.createElement("p");
+                added.className = "candidate-added";
+                const addedDate = candidate.addedAt ? new Date(candidate.addedAt) : new Date();
+                added.textContent = `Tillagd ${addedDate.toLocaleDateString("sv-SE", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                })} kl. ${addedDate.toLocaleTimeString("sv-SE", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                })}`;
+
+                listItem.append(name, meta, score, added);
+                return listItem;
+            };
+
+            const renderCandidates = () => {
+                list.innerHTML = "";
+                state.candidates.forEach((candidate) => {
+                    list.appendChild(createCandidateElement(candidate));
+                });
+                updateCount();
+                updateEmptyState();
+            };
+
+            const loadCandidates = () => {
+                if (!supportsLocalStorage) {
+                    state.candidates = [];
+                    renderCandidates();
+                    return;
+                }
+
+                try {
+                    const stored = window.localStorage.getItem(storageKey);
+                    state.candidates = stored ? JSON.parse(stored) : [];
+                } catch (error) {
+                    console.warn("Kunde inte läsa kandidater från lagring.", error);
+                    state.candidates = [];
+                }
+
+                renderCandidates();
+            };
+
+            const persistCandidates = () => {
+                if (!supportsLocalStorage) {
+                    return;
+                }
+
+                try {
+                    window.localStorage.setItem(storageKey, JSON.stringify(state.candidates));
+                } catch (error) {
+                    console.warn("Kunde inte spara kandidater till lagring.", error);
+                }
+            };
+
+            form.addEventListener("submit", (event) => {
+                event.preventDefault();
+                clearFeedback();
+
+                const formData = new FormData(form);
+                const name = (formData.get("name") || "").toString().trim();
+                const role = (formData.get("role") || "").toString().trim();
+                const experienceValue = (formData.get("experience") || "").toString().trim();
+                const location = (formData.get("location") || "").toString().trim();
+
+                if (!name || !role || !experienceValue || !location) {
+                    showFeedback("Fyll i alla fält innan du skickar in kandidaten.", "error");
+                    return;
+                }
+
+                const experience = Number(experienceValue);
+                if (!Number.isFinite(experience) || experience < 0) {
+                    showFeedback("Ange antal år av erfarenhet som ett heltal 0 eller större.", "error");
+                    return;
+                }
+
+                const answers = [];
+                for (let i = 1; i <= 5; i += 1) {
+                    const value = formData.get(`q${i}`);
+                    if (!value) {
+                        showFeedback("Besvara samtliga fem frågor för att gå vidare.", "error");
+                        return;
+                    }
+                    answers.push(value);
+                }
+
+                const positiveAnswers = answers.filter((answer) => answer === "ja").length;
+
+                if (positiveAnswers < relevantThreshold) {
+                    showFeedback("Kandidaten uppfyller inte kraven och sparas därför inte i databasen.", "error");
+                    return;
+                }
+
+                const candidate = {
+                    id: Date.now(),
+                    name,
+                    role,
+                    experience,
+                    location,
+                    answers,
+                    positiveAnswers,
+                    score: Math.round((positiveAnswers / 5) * 100),
+                    addedAt: new Date().toISOString(),
+                };
+
+                state.candidates = [candidate, ...state.candidates];
+                renderCandidates();
+                persistCandidates();
+                form.reset();
+                showFeedback("Kandidaten har kvalificerats och lagts till i databasen.", "success");
+                const nameField = document.getElementById("candidateName");
+                if (nameField) {
+                    nameField.focus();
+                }
+            });
+
+            loadCandidates();
+        })();
+    </script>
 </body>
 </html>
