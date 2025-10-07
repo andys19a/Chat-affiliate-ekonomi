@@ -79,6 +79,144 @@ const initScreeningPage = () => {
         activeRecruitmentId: null,
     };
 
+    const sanitizeString = (value, fallback = '') => {
+        if (typeof value === 'string') {
+            return value.trim();
+        }
+        if (typeof value === 'number' && Number.isFinite(value)) {
+            return String(value);
+        }
+        return fallback;
+    };
+
+    const normalizeQuestion = (question, index) => {
+        if (typeof question === 'string') {
+            const text = question.trim();
+            return {
+                id: `q${index + 1}`,
+                text: text || `Fråga ${index + 1}`,
+            };
+        }
+
+        if (question && typeof question === 'object') {
+            const idRaw = 'id' in question ? question.id : null;
+            const textRaw = 'text' in question ? question.text : null;
+            const labelRaw = 'label' in question ? question.label : null;
+            const promptRaw = 'prompt' in question ? question.prompt : null;
+
+            const id = sanitizeString(idRaw, `q${index + 1}`) || `q${index + 1}`;
+            const textCandidate = sanitizeString(textRaw) || sanitizeString(labelRaw) || sanitizeString(promptRaw);
+            const text = textCandidate || `Fråga ${index + 1}`;
+
+            return { id, text };
+        }
+
+        return {
+            id: `q${index + 1}`,
+            text: `Fråga ${index + 1}`,
+        };
+    };
+
+    const normalizeAnswers = (answers, questions = []) => {
+        if (!Array.isArray(answers)) {
+            return [];
+        }
+
+        return answers.map((answer, index) => {
+            if (typeof answer === 'string') {
+                const trimmedAnswer = answer.trim();
+                const question = questions[index];
+                const lower = trimmedAnswer.toLowerCase();
+                return {
+                    id: question ? question.id : `q${index + 1}`,
+                    text: question ? question.text : trimmedAnswer || `Fråga ${index + 1}`,
+                    value: lower.includes('nej') ? 'nej' : lower.includes('ja') ? 'ja' : 'nej',
+                };
+            }
+
+            if (answer && typeof answer === 'object') {
+                const relatedQuestion = questions.find((question) => question.id === answer.id) || questions[index];
+                const id = sanitizeString(answer.id, relatedQuestion ? relatedQuestion.id : `q${index + 1}`) ||
+                    `q${index + 1}`;
+                const textCandidate = sanitizeString(answer.text) || sanitizeString(answer.question);
+                const text = textCandidate || (relatedQuestion ? relatedQuestion.text : `Fråga ${index + 1}`);
+                const valueRaw = sanitizeString(answer.value).toLowerCase();
+                const value = valueRaw === 'ja' ? 'ja' : valueRaw === 'nej' ? 'nej' : 'nej';
+
+                return { id, text, value };
+            }
+
+            return {
+                id: `q${index + 1}`,
+                text: `Fråga ${index + 1}`,
+                value: 'nej',
+            };
+        });
+    };
+
+    const normalizeCandidate = (candidate, questions = []) => {
+        const source = candidate && typeof candidate === 'object' ? candidate : {};
+        const answers = normalizeAnswers(source.answers, questions);
+        const positiveCount = Number.isFinite(source.positiveCount)
+            ? Number(source.positiveCount)
+            : answers.filter((answer) => answer.value === 'ja').length;
+        const experience = Number(source.experience);
+        const scoreRaw = Number(source.score);
+        const score = Number.isFinite(scoreRaw) ? scoreRaw : Math.round((positiveCount / Math.max(answers.length, 1)) * 100);
+
+        return {
+            id: sanitizeString(source.id, `cand-${Date.now()}`) || `cand-${Date.now()}`,
+            name: sanitizeString(source.name, 'Okänd kandidat'),
+            experience: Number.isFinite(experience) ? experience : 0,
+            location: sanitizeString(source.location, 'Okänd ort'),
+            pitch: sanitizeString(source.pitch, ''),
+            answers,
+            positiveCount,
+            score,
+            submittedAt: sanitizeString(source.submittedAt, new Date().toISOString()),
+        };
+    };
+
+    const normalizeRecruitment = (entry) => {
+        const requirements = Array.isArray(entry.requirements)
+            ? entry.requirements
+                .map((requirement) => sanitizeString(requirement))
+                .filter((requirement) => requirement.length)
+            : [];
+
+        const questionsSource = Array.isArray(entry.questions) && entry.questions.length
+            ? entry.questions
+            : DEFAULT_QUESTIONS;
+        const questions = questionsSource.map((question, index) => normalizeQuestion(question, index));
+
+        const minThreshold = 1;
+        const questionCount = questions.length || MIN_QUESTIONS;
+        const maxThreshold = Math.max(questionCount, minThreshold);
+        const thresholdRaw = Number(entry.threshold);
+        const threshold = Number.isFinite(thresholdRaw)
+            ? Math.min(Math.max(thresholdRaw, minThreshold), maxThreshold)
+            : Math.min(Math.max(MIN_QUESTIONS, minThreshold), maxThreshold);
+
+        return {
+            id: sanitizeString(entry.id, `rec-${Date.now()}`) || `rec-${Date.now()}`,
+            name: sanitizeString(entry.name, 'Namnlös rekrytering'),
+            role: sanitizeString(entry.role, 'Roll ej angiven'),
+            location: sanitizeString(entry.location, 'Plats ej angiven'),
+            threshold,
+            requirements,
+            questions,
+            pipeline: Array.isArray(entry.pipeline)
+                ? entry.pipeline.map((candidate) => normalizeCandidate(candidate, questions))
+                : [],
+            accepted: Array.isArray(entry.accepted)
+                ? entry.accepted.map((candidate) => normalizeCandidate(candidate, questions))
+                : [],
+            rejected: Array.isArray(entry.rejected)
+                ? entry.rejected.map((candidate) => normalizeCandidate(candidate, questions))
+                : [],
+            createdAt: sanitizeString(entry.createdAt, new Date().toISOString()),
+        };
+    };
     const normalizeCandidate = (candidate) => ({
         id: candidate.id,
         name: candidate.name,
@@ -335,6 +473,10 @@ const initScreeningPage = () => {
     };
 
     const renderCandidateQuestions = (recruitment) => {
+        if (!candidateQuestionFields) {
+            return;
+        }
+
         candidateQuestionFields.innerHTML = '';
         if (!recruitment) {
             return;
@@ -394,6 +536,13 @@ const initScreeningPage = () => {
         candidateForm.classList.toggle('is-disabled', !isActive);
 
         if (!isActive) {
+            if (candidateHelper) {
+                candidateHelper.textContent = 'Välj en rekrytering för att aktivera formuläret.';
+            }
+            candidateForm.reset();
+            if (candidateQuestionFields) {
+                candidateQuestionFields.innerHTML = '';
+            }
             candidateHelper.textContent = 'Välj en rekrytering för att aktivera formuläret.';
             candidateForm.reset();
             candidateQuestionFields.innerHTML = '';
@@ -401,6 +550,9 @@ const initScreeningPage = () => {
             return;
         }
 
+        if (candidateHelper) {
+            candidateHelper.textContent = `Aktiv rekrytering: ${recruitment.name}. Minst ${recruitment.threshold} "ja" krävs.`;
+        }
         candidateHelper.textContent = `Aktiv rekrytering: ${recruitment.name}. Minst ${recruitment.threshold} "ja" krävs.`;
         candidateForm.reset();
         renderCandidateQuestions(recruitment);
